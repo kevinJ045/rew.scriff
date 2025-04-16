@@ -7,12 +7,15 @@ using namespace std::ns ->
     socket = null
 
     connect(token){
-      socket = io(this.url.socket, {
-        auth: {
-          token: token || this.auth.user.token
+      socket = io(this.self.url.base, {
+        extraHeaders: {
+          token: token || this.self.auth.user.token
         }
       })
-      if !token and this.auth.user.token
+
+      socket.connect()
+      
+      if !token and this.self.auth.user.token
         this.socket = socket
-      return socket
+      socket
     }
